@@ -3,11 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Klark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='core/css/style.css') }}">
+    <script src="{{ url_for('static', filename='lib/js/jquery-1.12.2.js') }}"></script>
 </head>
 <body>
 
-<h1>On Base</h1>
+<h1>Welcome to Klark</h1>
 
+<input id="nickname" title="Yours nickname" type="text" name="nick" value="" placeholder="Nickname">
+<br>
+<label for="q-to-win">Range of quantity crosses or noughts to win</label>
+<br>
+<input id="q-to-win" type="range" min="3" max="7" step="1">
+<br>
+<label for="g-b-size">Game board size</label>
+<br>
+<input id="g-b-size" type="range" min="3" max="5" step="1">
+<br>
+<label for="all">Selection of rules</label>
+<br>
+<input id="all" type="radio" name="course" value="All" checked><span>All</span>
+<br>
+<input id="selective" title="Selective of choice" type="radio" name="course" value="All">
+<span>Selective</span>
+<br>
+{#add color#}
+{#add form#}
 
+<script src="{{ url_for('static', filename='core/js/main.js') }}"></script>
 </body>
 </html>
