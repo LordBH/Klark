@@ -89,3 +89,4 @@ ENV/
 .idea/
 migrations/
 test.py
+*.db
