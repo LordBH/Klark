@@ -1,14 +1,18 @@
-import os
+from os import path
+
+
+BASE_DIR = path.join(path.dirname(__file__))
+DB_NAME = "klark.db"
 
 
 class ConfigClass:
     # App Settings
-    BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)))
     SECRET_KEY = 'SECRET_KEY'
 
     # Database
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    # SQLALCHEMY_DATABASE_URI = "postgresql:///cupcake"
+    # create DB on absolute path
+    SQLALCHEMY_DATABASE_URI = "sqlite:////" + BASE_DIR + '/' + DB_NAME
     CSRF_ENABLED = True
 
     # Flask-User settings
