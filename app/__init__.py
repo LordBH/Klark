@@ -1,7 +1,8 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from config import DevelopmentConfig
-from app.blueprints import BLUEPRINTS
+from flask import Flask
+from flask_socketio import SocketIO
+from flask_sqlalchemy import SQLAlchemy
+
 
 # application
 app = Flask(__name__)
@@ -12,6 +13,6 @@ app.config.from_object(DevelopmentConfig)
 # DataBase
 db = SQLAlchemy(app)
 
-# Register blueprints
-for b in BLUEPRINTS:
-    app.register_blueprint(b)
+# Web sockets
+socket_io = SocketIO(app)
+
