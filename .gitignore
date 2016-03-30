@@ -88,3 +88,4 @@ ENV/
 # my ignore
 .idea/
 migrations/
+test.py
