@@ -10,5 +10,4 @@ for b in BLUEPRINTS:
 host = '0.0.0.0'
 port = 5000
 
-# app.run(host=host, port=port)
 socket_io.run(app, host=host, port=port)
