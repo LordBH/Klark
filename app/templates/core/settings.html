@@ -1,0 +1,55 @@
+<form action="{{ url_for('core.index') }}" method="post">
+    <input id="nickname" title="Yours nickname" type="text" name="nick" value="" placeholder="Nickname">
+    <br>
+
+    <label for="q-to-win">Range of quantity crosses or noughts to win</label>
+    <br>
+    <input class="slider" id="q-to-win" type="range" min="3" max="7" step="1" name="q" value="3">
+    <input type="text" title="quantity of crosses and noughts">
+    <br>
+
+    <label for="g-b-size">Game board size</label>
+    <br>
+    <input class="slider" id="g-b-size" type="range" min="3" max="7" step="1" name="size" value="3">
+    <input type="text" title="Board size">
+    <br>
+
+    <div class="cb-choice">
+        <input title="Vertical moves" type="checkbox" name="ch-v" checked><span>Vertical</span><br>
+        <input title="Horizontal moves" type="checkbox" name="ch-h" checked><span>Horizontal</span><br>
+        <input title="Diagonal moves" type="checkbox" name="ch-d" checked><span>Diagonal</span><br>
+    </div>
+
+    <div class="board-color">
+        <div class="f-color">
+            <label for="red-f">R</label>
+            <input type="range" name="red-f" id="red-f" min="0" max="255" step="1">
+            <input class="in-color" title="R" type="text"><br>
+            <label for="green-f">G</label>
+            <input type="range" name="green-f" id="green-f" min="0" max="255" step="1">
+            <input class="in-color" title="G" type="text"><br>
+            <label for="blue-f">B</label>
+            <input type="range" name="blue-f" id="blue-f" min="0" max="255" step="1">
+            <input class="in-color" title="B" type="text"><br>
+        </div>
+        <div class="s-color">
+            <label for="red-s">R</label>
+            <input type="range" name="red-s" id="red-s" min="0" max="255" step="1">
+            <input class="in-color" title="R" type="text"><br>
+            <label for="green-s">G</label>
+            <input type="range" name="green-s" id="green-s" min="0" max="255" step="1">
+            <input class="in-color" title="G" type="text"><br>
+            <label for="blue-s">B</label>
+            <input type="range" name="blue-s" id="blue-s" min="0" max="255" step="1">
+            <input class="in-color" title="B" type="text"><br>
+        </div>
+    </div>
+
+    <div class="symbol-f">
+        <input id="default-sym" type="radio" name="symbol" checked>
+        <label for="default-sym"><span class="symbol">◯</span><span class="symbol sym-x">╳</span></label>
+    </div>
+
+    <input type="submit" value="Save my settings">
+
+</form>
