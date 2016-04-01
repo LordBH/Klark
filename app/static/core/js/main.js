@@ -4,11 +4,20 @@
 
 $(function () {
     var list = $('input[type=range]');
+    var alert = $('.alert');
     for (var i = 0; i < list.length; i++) {
         var idElement = '#' + list[i].id;
         var inputText = $(idElement).next('input[type=text]')[0];
         inputText.value = $(idElement)[0].value;
     }
+    if (alert[0].innerHTML){
+        alert.addClass('s-a');
+        setTimeout(function () {
+            alert.removeClass('s-a');
+        }, 7000)
+    }
+
+
 });
 
 $('input[type=range]').on('mousemove', function (d) {
@@ -56,4 +65,8 @@ function changeView(ch) {
 
     wrapper.removeClass(show);
     $('.' + ch).parent().addClass(show);
+}
+
+function sendRecall(){
+    $('#re-call').submit();
 }

@@ -9,13 +9,19 @@
 <div class="fixed-wrapper">
 
     <div class="cont-f">
-        <form action="" method="post">
+        <form id="re-call" action="{{ url_for('core.recall') }}" method="post">
             <label for="title-">Title :</label><br>
-            <input id="title-" type="text"><br>
+            <input id="title-" type="text" name="title"><br>
             <label for="msg">Message : </label><br>
-            <textarea id="msg"></textarea><br>
-            <div class="d-but">Send</div>
+            <textarea id="msg" name="message"></textarea><br>
+            <div class="d-but" onclick="sendRecall()">Send</div>
         </form>
     </div>
 
 </div>
+
+{% if context['msg'] %}
+        <div class="alert">
+            {{ context['msg'] }}
+        </div>
+{% endif %}

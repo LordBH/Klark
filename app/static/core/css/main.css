@@ -72,7 +72,7 @@ a {
     bottom: 3%;
 }
 
-.alert {
+.rel {
     position: absolute;
     bottom: 3%;
     left: 4%;
@@ -90,8 +90,6 @@ a {
 .bar:hover {
     color: white;
 }
-
-
 
 .play {
     color: white;
@@ -148,29 +146,24 @@ a {
     transition: opacity .4s;
 }
 
-
 .show-div {
     opacity: 1;
 }
 
-
 /** VIEW **/
 
-
-
-.board{
+.board {
     opacity: 1;
 
 }
 
-.set-board{
+.set-board {
 
 }
 
 .cont-f {
 
 }
-
 
 .cont-f > form > label {
     color: #262626;
@@ -188,7 +181,6 @@ a {
 }
 
 /** children **/
-
 
 textarea {
     height: 200px;
@@ -216,3 +208,36 @@ textarea {
     background-color: #787878;
 }
 
+/** ALERT **/
+
+.alert {
+    position: absolute;
+    opacity: 0;
+    bottom: 4%;
+    right: 0;
+    padding: 15px 25px;
+    background-color: #232323;
+    color: white;
+
+}
+
+.s-a {
+    animation-name: show-alert;
+    animation-duration: 5s;
+    animation-iteration-count: 1;
+}
+
+@keyframes show-alert {
+    20% {
+        opacity: 1;
+        right: 3%;
+    }
+    92% {
+        opacity: 1;
+        right: 3%;
+    }
+    to {
+        opacity: 0;
+        right: 0;
+    }
+}
