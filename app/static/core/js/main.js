@@ -86,12 +86,15 @@ function showSettings() {
 }
 function showContacts() {
     var c = 'cont-f';
+    $('.' + c).css('visibility', 'visible');
     changeView(c);
+
 }
 
 function changeView(ch) {
     var show = 'show-div';
     var wrapper = $('.' + show);
+
     if (wrapper.children().hasClass('set-board')) {
         var hr = '.hor-set';
         $('.wrapper').css('height', '100%');
@@ -102,6 +105,10 @@ function changeView(ch) {
         $(config).addClass('no-animate-set');
         $(config).removeClass('animate-set');
         $(config).hide();
+    }
+
+    if (wrapper.children().hasClass('cont-f')){
+        wrapper.children().css('visibility', 'hidden');
     }
 
     wrapper.removeClass(show);

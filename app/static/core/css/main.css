@@ -268,12 +268,8 @@ textarea {
     }
 }
 
-.fixed-wrapper{
-
-}
-
 .cont-f{
-
+    visibility: hidden;
 }
 .bor{
     display: flex;
