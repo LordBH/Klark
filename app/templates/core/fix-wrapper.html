@@ -1,27 +1,20 @@
 <div class="fixed-wrapper show-div">
-    <div class="board">Board DIV</div>
+    <div class="board">
+        {% include 'core/board.html' %}
+    </div>
 </div>
 
 <div class="fixed-wrapper">
-    <div class="set-board">SETTINGS DIV</div>
+    <div class="set-board">
+        {% include 'core/set-board.html' %}
+    </div>
 </div>
 
 <div class="fixed-wrapper">
 
     <div class="cont-f">
-        <form id="re-call" action="{{ url_for('core.recall') }}" method="post">
-            <label for="title-">Title :</label><br>
-            <input id="title-" type="text" name="title"><br>
-            <label for="msg">Message : </label><br>
-            <textarea id="msg" name="message"></textarea><br>
-            <div class="d-but" onclick="sendRecall()">Send</div>
-        </form>
+
+        {% include 'core/contacts.html' %}
     </div>
 
 </div>
-
-{% if context['msg'] %}
-        <div class="alert">
-            {{ context['msg'] }}
-        </div>
-{% endif %}

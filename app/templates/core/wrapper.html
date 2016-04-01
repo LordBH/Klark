@@ -7,16 +7,15 @@
 
     <div class="play">
         <div class="out-a">
-                <div class="in-a">
-                    <div>Play with Anybody</div>
-                </div>
+            <div class="in-a">
+                <div>Play with Anybody</div>
+            </div>
         </div>
 
-
         <div class="out-f">
-                <div class="in-f">
-                    <div>Play with Friends</div>
-                </div>
+            <div class="in-f">
+                <div>Play with Friends</div>
+            </div>
         </div>
 
     </div>
@@ -25,11 +24,21 @@
         <ul>
             <li class="bar" id="games" onclick="">Games</li>
             <li class="bar" id="sett">Settings</li>
-{#            {% include 'core/settings.html' %}#}
         </ul>
+        <hr class="hor-set">
+        <div class="config">
+            {% include 'core/settings.html' %}
+        </div>
     </div>
 
     <span class="arrow-menu">↪</span>
     <div class="rel" onclick="showContacts()">If u find some error alert me.</div>
     <div class="author"><a href="https://github.com/LordBH/">Created By LordBH</a></div>
+
+    {% if context['msg'] %}
+        <div id="alert">
+            {{ context['msg'] }}
+        </div>
+    {% endif %}
+
 </div>

@@ -1,20 +1,28 @@
-<form action="{{ url_for('core.index') }}" method="post">
-    <input id="nickname" title="Yours nickname" type="text" name="nick" value="" placeholder="Nickname">
-    <br>
+<form action="{{ url_for('core.settings') }}" method="post" class="config" id="settings">
+    <div>
+    <label for="nickname">~ Nickname : </label>
+    <input id="nickname" type="text" name="nick" value="" placeholder="">
 
-    <label for="q-to-win">Range of quantity crosses or noughts to win</label>
+    </div>
+
+    <div>
+    <label for="q-to-win">~ Range of quantity crosses or noughts to win</label>
     <br>
-    <input class="slider" id="q-to-win" type="range" min="3" max="7" step="1" name="q" value="3">
+    <input class="slider" id="q-to-win" type="range" min="3" max="13" step="1" name="q" value="3">
     <input type="text" title="quantity of crosses and noughts">
     <br>
-
-    <label for="g-b-size">Game board size</label>
+    </div>
+    <div>
+    <label for="g-b-size">~ Game board size</label>
     <br>
-    <input class="slider" id="g-b-size" type="range" min="3" max="7" step="1" name="size" value="3">
+    <input class="slider" id="g-b-size" type="range" min="3" max="12" step="1" name="size" value="3">
     <input type="text" title="Board size">
     <br>
+    </div>
+
 
     <div class="cb-choice">
+        <label>~ Permissible movement</label><br>
         <input title="Vertical moves" type="checkbox" name="ch-v" checked><span>Vertical</span><br>
         <input title="Horizontal moves" type="checkbox" name="ch-h" checked><span>Horizontal</span><br>
         <input title="Diagonal moves" type="checkbox" name="ch-d" checked><span>Diagonal</span><br>
@@ -22,34 +30,64 @@
 
     <div class="board-color">
         <div class="f-color">
+            <label>~ First Cell</label><br>
             <label for="red-f">R</label>
-            <input type="range" name="red-f" id="red-f" min="0" max="255" step="1">
+            <input type="range" name="red-f" id="red-f" min="0" max="255" step="1" value="255">
             <input class="in-color" title="R" type="text"><br>
             <label for="green-f">G</label>
-            <input type="range" name="green-f" id="green-f" min="0" max="255" step="1">
+            <input type="range" name="green-f" id="green-f" min="0" max="255" step="1" value="255">
             <input class="in-color" title="G" type="text"><br>
             <label for="blue-f">B</label>
-            <input type="range" name="blue-f" id="blue-f" min="0" max="255" step="1">
+            <input type="range" name="blue-f" id="blue-f" min="0" max="255" step="1" value="255">
             <input class="in-color" title="B" type="text"><br>
         </div>
+        <br>
         <div class="s-color">
+            <label>~ Second Cell</label><br>
             <label for="red-s">R</label>
-            <input type="range" name="red-s" id="red-s" min="0" max="255" step="1">
+            <input type="range" name="red-s" id="red-s" min="0" max="255" step="1" value="0">
             <input class="in-color" title="R" type="text"><br>
             <label for="green-s">G</label>
-            <input type="range" name="green-s" id="green-s" min="0" max="255" step="1">
+            <input type="range" name="green-s" id="green-s" min="0" max="255" step="1" value="0">
             <input class="in-color" title="G" type="text"><br>
             <label for="blue-s">B</label>
-            <input type="range" name="blue-s" id="blue-s" min="0" max="255" step="1">
+            <input type="range" name="blue-s" id="blue-s" min="0" max="255" step="1" value="0">
+            <input class="in-color" title="B" type="text"><br>
+        </div>
+        <br>
+        <div class="n-color">
+            <label>~ Noughts Cell</label><br>
+            <label for="red-n">R</label>
+            <input type="range" name="red-n" id="red-n" min="0" max="255" step="1" value="0">
+            <input class="in-color" title="R" type="text"><br>
+            <label for="green-n">G</label>
+            <input type="range" name="green-n" id="green-n" min="0" max="255" step="1" value="0">
+            <input class="in-color" title="G" type="text"><br>
+            <label for="blue-n">B</label>
+            <input type="range" name="blue-n" id="blue-n" min="0" max="255" step="1" value="0">
+            <input class="in-color" title="B" type="text"><br>
+        </div>
+        <br>
+        <div class="c-color">
+            <label>~ Crosses Cell</label><br>
+            <label for="red-c">R</label>
+            <input type="range" name="red-c" id="red-c" min="0" max="255" step="1" value="0">
+            <input class="in-color" title="R" type="text"><br>
+            <label for="green-c">G</label>
+            <input type="range" name="green-c" id="green-c" min="0" max="255" step="1" value="0">
+            <input class="in-color" title="G" type="text"><br>
+            <label for="blue-c">B</label>
+            <input type="range" name="blue-c" id="blue-c" min="0" max="255" step="1" value="0">
             <input class="in-color" title="B" type="text"><br>
         </div>
     </div>
 
     <div class="symbol-f">
-        <input id="default-sym" type="radio" name="symbol" checked>
-        <label for="default-sym"><span class="symbol">◯</span><span class="symbol sym-x">╳</span></label>
+        <label for="nou">Noughts</label>
+        <input id="nou" type="text" name="cell-1" value="O">
+        <label for="cros">Crosses</label>
+        <input id="cros" type="text" name="cell-2" value="X">
     </div>
 
-    <input type="submit" value="Save my settings">
-
+    <div id="d-but-2" onclick="saveSettings()">Save my settings</div>
 </form>
