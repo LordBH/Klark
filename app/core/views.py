@@ -38,4 +38,8 @@ def recall():
 def settings():
     if request.method == 'POST':
         data = get_configurations(request)
-        return render_template('core/base.html', context=context)
+        print()
+        print(data)
+        print()
+        session['message'] = 'Settings saved for yours IP'
+        return redirect(url_for('core.index'))
