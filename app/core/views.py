@@ -1,5 +1,4 @@
-from app import socket_io
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from app.core.tools import get_configurations
 
 
@@ -13,16 +12,30 @@ extra = core_blueprint
 def index():
     context = {}
 
-    if request.method == 'GET':
+    message = session.get('message')
+    if message is not None:
+        context['msg'] = message
+        del session['message']
 
+    if request.method == 'GET':
         return render_template('core/base.html', context=context)
 
+
+@extra.route(r'/recall', methods=['POST'])
+def recall():
+    get = request.form.get
+    title = get('title')
+    message = get('message')
+    print()
+    print(title)
+    print(message)
+    print()
+    session['message'] = 'Thank you for helping'
+    return redirect(url_for('core.index'))
+
+
+@extra.route(r'/settings', methods=['POST'])
+def settings():
     if request.method == 'POST':
-
         data = get_configurations(request)
-
-        print()
-        print(data)
-        print()
-
         return render_template('core/base.html', context=context)
