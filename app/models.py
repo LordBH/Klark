@@ -7,6 +7,11 @@ class GameRooms(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     game_id = db.Column(db.String(80), nullable=False)
+    player1 = db.Column(db.String(80), nullable=False)
+    player2 = db.Column(db.String(80), nullable=False)
+    ip1 = db.Column(db.String(15), nullable=False)
+    ip2 = db.Column(db.String(15), nullable=False)
+    win = db.Column(db.Boolean)
     moves = db.Column(db.Text)
     active = db.Column(db.DateTime, default=datetime.now())
 
@@ -26,18 +31,6 @@ class UserConfigurations(db.Model):
     color = db.Column(db.String(20), nullable=False)
     symbols = db.Column(db.Text)
     last_active = db.Column(db.DateTime, default=datetime.now())
-
-    def __init__(self):
-        pass
-
-
-class UserGames(db.Model):
-    __tablename__ = 'played'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    ip = db.Column(db.String(15), nullable=False)
-    game_id = db.Column(db.String(80), nullable=False)
-    win = db.Column(db.Boolean)
 
     def __init__(self):
         pass
