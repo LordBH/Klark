@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from app import app
 from app.core.tools import get_configurations
 
 
@@ -43,3 +44,8 @@ def settings():
         print()
         session['message'] = 'Settings saved for yours IP'
         return redirect(url_for('core.index'))
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html')
