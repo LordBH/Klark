@@ -6,12 +6,12 @@ class GameRooms(db.Model):
     __tablename__ = 'game_rooms'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    game_id = db.Column(db.String(80), nullable=False)
-    player1 = db.Column(db.String(80), nullable=False)
-    player2 = db.Column(db.String(80), nullable=False)
+    game_id = db.Column(db.String(30), nullable=False)
+    player1 = db.Column(db.String(40), nullable=False)
+    player2 = db.Column(db.String(40), nullable=False)
+    win = db.Column(db.String(40), nullable=False)
     ip1 = db.Column(db.String(15), nullable=False)
     ip2 = db.Column(db.String(15), nullable=False)
-    win = db.Column(db.Boolean)
     moves = db.Column(db.Text)
     active = db.Column(db.DateTime, default=datetime.now())
 
@@ -25,8 +25,8 @@ class UserConfigurations(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     ip = db.Column(db.String(15), nullable=False)
     nickname = db.Column(db.String(80), nullable=False)
-    quantity_to_win = db.Column(db.Integer(20), nullable=False)
-    board_size = db.Column(db.Integer(20), nullable=False)
+    quantity_to_win = db.Column(db.Integer, nullable=False)
+    board_size = db.Column(db.Integer, nullable=False)
     selections = db.Column(db.String(10), nullable=False)
     color = db.Column(db.String(20), nullable=False)
     symbols = db.Column(db.Text)
