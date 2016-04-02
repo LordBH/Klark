@@ -5,14 +5,25 @@
 var boardRangeSize = 0;
 var maxSize = 0;
 var boardSymbols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
+var start = 0;
+
 
 $(function () {
     var list = $('input[type=range]');
-    var alert = $('#alert');
+    var al = $('#alert');
     for (var i = 0; i < list.length; i++) {
         var idElement = '#' + list[i].id;
         var inputText = $(idElement).next('input[type=text]')[0];
         inputText.value = $(idElement)[0].value;
+
+
+    }
+
+    if (al[0].textContent != '') {
+        al.addClass('s-a');
+        setTimeout(function () {
+            al.removeClass('s-a');
+        }, 7000)
 
         if (idElement == '#g-b-size') {
             boardRangeSize = $(idElement)[0].value;
@@ -20,16 +31,23 @@ $(function () {
             createBoard(maxSize);
             changeViewBoardSize(boardRangeSize);
 
+            var s1 = $('#noughts-').val();
+            var s2 = $('#crosses-').val();
+            $('#a1').text(s1);
+            $('#a2').text(s2);
+            $('#b1').text(s2);
+            $('#b2').text(s1);
+            $('.board-color>div>input[type=range]').trigger('input')
         }
     }
-    if (alert[0]) {
-        alert.addClass('s-a');
-        setTimeout(function () {
-            alert.removeClass('s-a');
-        }, 7000)
-    }
+});
 
-
+$('input[type=text]').on('change', function (d) {
+    var idElement = '#' + d.target.id;
+    var inputText = $(idElement).prev('input[type="range"]');
+    var v = $(idElement).val();
+    inputText.val(v);
+    $('.board-color>div>input[type=range]').trigger('input')
 });
 
 $('input[type=range]').on('mousemove', function (d) {
@@ -44,6 +62,47 @@ $('input[type=range]').on('mousemove', function (d) {
     }
 });
 
+
+$('.board-color>div>input[type=range]').on('input', function (d) {
+
+    var idElement = '#' + d.target.id;
+    var classID = idElement[idElement.length - 1];
+    var c_rgb = $('.' + classID + '-color>.in-color');
+    var rgb = '#';
+
+    for (var i = 0; i < c_rgb.length; i++) {
+        var val = c_rgb[i].value;
+        val = checkInterval(val);
+        rgb += val
+    }
+
+    if (classID == 'f') {
+        $('.' + 'blc').not('.dsp-none').css('background-color', rgb)
+    }
+    else if (classID == 's') {
+        $('.' + 'wht').not('.dsp-none').css('background-color', rgb);
+    } else if (classID == 'n') {
+        $('.' + 'blc').not('.dsp-none').css('color', rgb);
+    } else if (classID == 'c') {
+        $('.' + 'wht').not('.dsp-none').css('color', rgb);
+    }
+
+});
+
+
+$('.symbol-f').on('keyup', function (e) {
+    var idElement = '#' + e.target.id;
+    var v = $(idElement).val().toUpperCase();
+
+    if (idElement == '#crosses-') {
+        $('#a2').text(v);
+        $('#b1').text(v);
+
+    } else if (idElement == '#noughts-') {
+        $('#a1').text(v);
+        $('#b2').text(v);
+    }
+});
 
 $('li').click(function (event) {
     event.preventDefault();
@@ -107,7 +166,7 @@ function changeView(ch) {
         $(config).hide();
     }
 
-    if (wrapper.children().hasClass('cont-f')){
+    if (wrapper.children().hasClass('cont-f')) {
         wrapper.children().css('visibility', 'hidden');
     }
 
@@ -116,7 +175,13 @@ function changeView(ch) {
 }
 
 function sendRecall() {
-    $('#re-call').submit();
+    var v1 = $('#title-').val();
+    var v2 = $('#msg').val();
+    if (v1.length > 2 && v2.length > 5) {
+        $('#re-call').submit();
+    } else {
+        alertMessage("Please type more information to title or message");
+    }
 }
 
 function saveSettings() {
@@ -146,12 +211,25 @@ function createBoard(val) {
 
 function changeViewBoardSize(val) {
     var v = parseInt(val);
-    $('.bor>div').css({
-       'flex-grow': v,
-       'flex-basis': 100/v + '%',
-        'width': 650/(v*v),
-        'height': 650/v
+    var b_d = '.bor>div';
+
+    $(b_d).css({
+        'flex-grow': v,
+        'flex-basis': 100 / v + '%',
+        'width': 650 / (v * v),
+        'height': 650 / v
     });
+
+    if (v == 3) {
+        $(b_d).css('font-size', (650 / v) - v * 12);
+    } else if (v < 6) {
+        $(b_d).css('font-size', (650 / v) - v * 3);
+    } else if (v < 10) {
+        $(b_d).css('font-size', (650 / v) - v * 2);
+    } else {
+        $(b_d).css('font-size', (650 / v) - v);
+    }
+
 
     for (var i = 0; i < maxSize; i++)
         for (var j = 1; j < maxSize + 1; j++) {
@@ -159,6 +237,25 @@ function changeViewBoardSize(val) {
                 $('#' + boardSymbols[i] + j).removeClass('dsp-none');
             else
                 $('#' + boardSymbols[i] + j).addClass('dsp-none');
+        }
 }
 
+
+function checkInterval(value) {
+    var v = parseInt(value);
+    if (v > 255) {
+        return 'ff'
+    } else if (v < 0) {
+        return '00'
+    } else
+        return v.toString(16)
+}
+
+function alertMessage(msg) {
+    var al = '#alert';
+    $(al).text(msg);
+    $(al).addClass('s-a');
+    setTimeout(function () {
+        $(al).removeClass('s-a');
+    }, 7000)
 }

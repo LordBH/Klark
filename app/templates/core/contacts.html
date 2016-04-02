@@ -1,6 +1,6 @@
 <form id="re-call" action="{{ url_for('core.recall') }}" method="post">
     <label for="title-">Title :</label><br>
-    <input id="title-" type="text" name="title"><br>
+    <input id="title-" type="text" name="title" required><br>
     <label for="msg">Message : </label><br>
     <textarea id="msg" name="message"></textarea><br>
     <div class="d-but" onclick="sendRecall()">Send</div>
