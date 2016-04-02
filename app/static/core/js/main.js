@@ -37,7 +37,6 @@ $(function () {
             $('#a2').text(s2);
             $('#b1').text(s1);
             $('#b2').text(s2);
-            $('.board-color>div>input[type=range]').trigger('input')
         }
     }
 });
@@ -67,7 +66,7 @@ $('.board-color>div>input[type=range]').on('input', function (d) {
 
     var idElement = '#' + d.target.id;
     var classID = idElement[idElement.length - 1];
-    var c_rgb = $('.' + classID + '-color>.in-color');
+    var c_rgb = $('.' + classID + '-color>input[type=range]');
     var rgb = '#';
 
     for (var i = 0; i < c_rgb.length; i++) {
@@ -75,6 +74,7 @@ $('.board-color>div>input[type=range]').on('input', function (d) {
         val = checkInterval(val);
         rgb += val
     }
+    console.log(rgb);
 
     if (classID == 'f') {
         $('.' + 'blc').not('.dsp-none').css('background-color', rgb)
@@ -86,7 +86,6 @@ $('.board-color>div>input[type=range]').on('input', function (d) {
     } else if (classID == 'c') {
         $('.' + 'wht').not('.dsp-none').css('color', rgb);
     }
-
 });
 
 
@@ -247,8 +246,13 @@ function checkInterval(value) {
         return 'ff'
     } else if (v < 0) {
         return '00'
-    } else
-        return v.toString(16)
+    } else {
+        var s = v.toString(16);
+        if (s.length != 2) {
+            s = 0 + s
+        }
+        return s
+    }
 }
 
 function alertMessage(msg) {
