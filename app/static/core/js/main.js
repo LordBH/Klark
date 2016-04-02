@@ -1,11 +1,6 @@
-/**
- * Created by lordbh on 3/30/16.
- */
-
 var boardRangeSize = 0;
 var maxSize = 0;
 var boardSymbols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
-var start = 0;
 
 
 $(function () {
@@ -23,22 +18,22 @@ $(function () {
         var idElement = '#' + list[i].id;
         var inputText = $(idElement).next('input[type=text]')[0];
         inputText.value = $(idElement)[0].value;
-
-
-        if (idElement == '#g-b-size') {
-            boardRangeSize = $(idElement)[0].value;
-            maxSize = $(idElement)[0].max;
-            createBoard(maxSize);
-            changeViewBoardSize(boardRangeSize);
-
-            var s1 = $('#noughts-').val();
-            var s2 = $('#crosses-').val();
-            $('#a1').text(s1);
-            $('#a2').text(s2);
-            $('#b1').text(s1);
-            $('#b2').text(s2);
-        }
     }
+
+    idElement = '#g-b-size';
+    boardRangeSize = $(idElement)[0].value;
+    maxSize = $(idElement)[0].max;
+    createBoard(maxSize);
+    changeViewBoardSize(boardRangeSize);
+
+
+    var s1 = $('#noughts-').val();
+    var s2 = $('#crosses-').val();
+    $('#a1').text(s1);
+    $('#a2').text(s2);
+    $('#b1').text(s1);
+    $('#b2').text(s2);
+
 });
 
 $('input[type=text]').on('change', function (d) {
