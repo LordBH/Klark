@@ -11,19 +11,19 @@ var start = 0;
 $(function () {
     var list = $('input[type=range]');
     var al = $('#alert');
+
+    if (al.text() != '') {
+        al.addClass('s-a');
+        setTimeout(function () {
+            al.removeClass('s-a');
+        }, 7000)
+    }
+
     for (var i = 0; i < list.length; i++) {
         var idElement = '#' + list[i].id;
         var inputText = $(idElement).next('input[type=text]')[0];
         inputText.value = $(idElement)[0].value;
 
-
-    }
-
-    if (al[0].textContent != '') {
-        al.addClass('s-a');
-        setTimeout(function () {
-            al.removeClass('s-a');
-        }, 7000)
 
         if (idElement == '#g-b-size') {
             boardRangeSize = $(idElement)[0].value;
@@ -35,8 +35,8 @@ $(function () {
             var s2 = $('#crosses-').val();
             $('#a1').text(s1);
             $('#a2').text(s2);
-            $('#b1').text(s2);
-            $('#b2').text(s1);
+            $('#b1').text(s1);
+            $('#b2').text(s2);
             $('.board-color>div>input[type=range]').trigger('input')
         }
     }
@@ -96,11 +96,11 @@ $('.symbol-f').on('keyup', function (e) {
 
     if (idElement == '#crosses-') {
         $('#a2').text(v);
-        $('#b1').text(v);
+        $('#b2').text(v);
 
     } else if (idElement == '#noughts-') {
         $('#a1').text(v);
-        $('#b2').text(v);
+        $('#b1').text(v);
     }
 });
 
