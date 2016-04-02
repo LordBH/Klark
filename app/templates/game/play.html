@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Play</title>
+    <title>Game</title>
 </head>
 <body>
+
+<div class="view">
+
+    <div class="info">
+        {% include 'game/info.html' %}
+    </div>
+
+    <div class="game">
+        {% include 'game/game.html' %}
+    </div>
+
+    <div class="chat">
+        {% include 'game/chat.html' %}
+    </div>
+
+</div>
 
 </body>
 </html>
