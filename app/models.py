@@ -48,14 +48,15 @@ class UserConfigurations(db.Model):
         u = UserConfigurations
         self.rules = u.set_selections(self)
         self.colors = u.set_colors(self)
-        self.symbols = u.set_symbols(self)
+        self.symbols = u.set_symbols(self).upper()
 
     @staticmethod
     def set_selections(self):
         sel = ''
 
-        for x in self.rules:
-            sel += x + "|"
+        for x, y in self.rules.items():
+            if y == 'on':
+                sel += x[0] + "|"
 
         return sel
 
@@ -76,12 +77,9 @@ class UserConfigurations(db.Model):
 
     @staticmethod
     def change_settings(q, data):
-        q.nickname = data['nickname']
-        q.quantity = data['quantity']
-        q.size = data['size']
-        q.rules = data['rules']
-        q.colors = data['colors']
-        q.symbols = data['symbols']
+        for x in q.__dict__:
+            if x[0] not in ['_', 'd', 'i']:
+                q.__dict__[x] = data[x]
 
         UserConfigurations.set_data(q)
 
