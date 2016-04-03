@@ -1,6 +1,7 @@
-from flask_mail import Message
-from app import mail
+from app import mail, db
 from config import ConfigClass
+from flask_mail import Message
+from app.models import UserConfigurations
 
 
 def get_configurations(r):
@@ -16,13 +17,13 @@ def get_configurations(r):
             'vertical': get('ch-v'),
             'diagonal': get('ch-d'),
         },
-        'color': {
-          'first': [get('red-f'), get('green-f'), get('blue-f')],
-          'second': [get('red-s'), get('green-s'), get('blue-s')],
-          'noughts': [get('red-n'), get('green-n'), get('blue-n')],
-          'crosses': [get('red-c'), get('green-c'), get('blue-c')],
+        'colors': {
+          'f': [get('red-f'), get('green-f'), get('blue-f')],
+          's': [get('red-s'), get('green-s'), get('blue-s')],
+          'n': [get('red-n'), get('green-n'), get('blue-n')],
+          'c': [get('red-c'), get('green-c'), get('blue-c')],
         },
-        'symbol': [get('cell-1'), get('cell-2')]
+        'symbols': [get('cell-1'), get('cell-2')]
     }
 
     return data
@@ -33,3 +34,15 @@ def send_message(t, m):
     msg.html = m
 
     mail.send(msg)
+
+
+def save_settings(c, ip):
+    q = UserConfigurations.query.filter_by(ip=ip).first()
+
+    if q is None:
+        q = UserConfigurations(c, ip)
+        db.session.add(q)
+    else:
+        UserConfigurations.change_settings(q, c)
+
+    db.session.commit()

@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from app.core.tools import get_configurations, send_message, save_settings
+from app.core.validations import ValidateConfig
 from app import app
-from app.core.tools import get_configurations, send_message
 
 
 core_blueprint = Blueprint('core', __name__, template_folder='templates',
@@ -9,7 +10,7 @@ core_blueprint = Blueprint('core', __name__, template_folder='templates',
 extra = core_blueprint
 
 
-@extra.route(r'/', methods=['GET', 'POST'])
+@extra.route(r'/', methods=['GET'])
 def index():
     context = {}
 
@@ -24,25 +25,32 @@ def index():
 
 @extra.route(r'/recall', methods=['POST'])
 def recall():
+    session['message'] = 'So small e-mail, retry'
     get = request.form.get
     title = get('title')
     message = get('message')
-    send_message(title, message)
-    session['message'] = 'Thank you for helping'
+    if len(title) > 3 and len(message) > 10:
+        send_message(title, message)
+        session['message'] = 'Thank you for helping'
     return redirect(url_for('core.index'))
 
 
-@extra.route(r'/settings', methods=['POST'])
+@extra.route(r'/set_settings', methods=['POST'])
 def settings():
     if request.method == 'POST':
+        session['message'] = 'Bad Settings'
+
         data = get_configurations(request)
-        print()
-        print(data)
-        print()
-        session['message'] = 'Settings saved for yours IP'
+        validate = ValidateConfig()
+        if validate(data):
+            ip = request.remote_addr
+            save_settings(data, ip)
+            session['message'] = 'Settings saved for yours IP'
+
         return redirect(url_for('core.index'))
 
 
 @app.errorhandler(404)
 def not_found(error):
+    print(error)
     return render_template('404.html')
