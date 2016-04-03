@@ -192,13 +192,13 @@ function createBoard(val) {
         for (var i = 1; i < v + 1; i++) {
             if (i % 2 == 0) {
                 $(bor).append('<div id="' + boardSymbols[y] + i + '" class="dsp-none ' + white + '"></div>');
-                if (v % 2 == 0 && val == i) {
-                    var extra = black;
-                    black = white;
-                    white = extra;
-                }
             } else {
                 $(bor).append('<div id="' + boardSymbols[y] + i + '" class="dsp-none ' + black + '"></div>');
+            }
+            if (val == i) {
+                var extra = black;
+                black = white;
+                white = extra;
             }
         }
 }

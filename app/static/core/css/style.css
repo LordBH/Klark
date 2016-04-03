@@ -178,3 +178,7 @@ div>label:first-child{
 #d-but-2:hover{
     background-color: #393939;
 }
+table{
+
+    border-collapse: collapse;
+}
