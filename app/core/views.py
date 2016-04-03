@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
-from app.core.tools import get_configurations, send_message, save_settings
+from app.core.tools import get_configurations, send_message, save_settings, get_user_settings
 from app.core.validations import ValidateConfig
 from app import app
 
@@ -20,7 +20,10 @@ def index():
         del session['message']
 
     if request.method == 'GET':
-        return render_template('core/base.html', context=context)
+        context = get_user_settings(context, request.remote_addr)
+
+        return render_template('core/base.html',
+                               context=context, colors=context.get('colors'))
 
 
 @extra.route(r'/recall', methods=['POST'])
