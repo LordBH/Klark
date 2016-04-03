@@ -25,8 +25,8 @@ class UserConfigurations(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     ip = db.Column(db.String(15), nullable=False, unique=True)
     nickname = db.Column(db.String(80), nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    size = db.Column(db.Integer, nullable=False)
+    q_count = db.Column(db.String(5), nullable=False)
+    q_size = db.Column(db.String(5), nullable=False)
     rules = db.Column(db.String(10), nullable=False)
     colors = db.Column(db.String(20), nullable=False)
     symbols = db.Column(db.Text)
@@ -35,26 +35,25 @@ class UserConfigurations(db.Model):
     def __init__(self, data, ip):
         self.ip = ip
         self.nickname = data['nickname']
-        self.quantity = data['quantity']
-        self.size = data['size']
+        self.q_count = data['q_count']
+        self.q_size = data['q_size']
         self.rules = data['rules']
         self.colors = data['colors']
         self.symbols = data['symbols']
 
-        self.set_data(self)
+        self.set_data()
 
-    @staticmethod
     def set_data(self):
         u = UserConfigurations
-        self.rules = u.set_selections(self)
+        self.rules = u.set_rules(self)
         self.colors = u.set_colors(self)
         self.symbols = u.set_symbols(self).upper()
 
     @staticmethod
-    def set_selections(self):
+    def set_rules(self):
         sel = ''
 
-        for x, y in self.rules.items():
+        for x, y in self.items():
             if y == 'on':
                 sel += x[0] + "|"
 
@@ -64,23 +63,27 @@ class UserConfigurations(db.Model):
     def set_colors(self):
         colors = ''
 
-        col = self.colors
-
-        for x, y in col.items():
+        for x, y in self.items():
             colors += x + ':' + y[0] + "|" + y[1] + "|" + y[2] + '+'
 
         return colors
 
     @staticmethod
     def set_symbols(self):
-        return self.symbols[0] + '|' + self.symbols[1]
+        return self[0] + '|' + self[1]
 
     @staticmethod
     def change_settings(q, data):
-        for x in q.__dict__:
-            if x[0] not in ['_', 'd', 'i']:
-                q.__dict__[x] = data[x]
-
-        UserConfigurations.set_data(q)
+        # for x in q.__dict__:
+        #     if x[0] not in ['_', 'd', 'i']:
+        #         q.__dict__[x] = data[x]
+        u = UserConfigurations
+        q.nickname = data['nickname']
+        q.q_count = data['q_count']
+        q.q_size = data['q_size']
+        q.rules = u.set_rules(data['rules'])
+        q.colors = u.set_colors(data['colors'])
+        q.symbols = u.set_symbols(data['symbols']).upper()
+        return q
 
 db.create_all()
