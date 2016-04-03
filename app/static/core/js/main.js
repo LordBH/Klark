@@ -33,6 +33,8 @@ $(function () {
     $('#a2').text(s2);
     $('#b1').text(s1);
     $('#b2').text(s2);
+    
+    $('.board-color>div>input[type=range]').trigger('input');
 
 });
 

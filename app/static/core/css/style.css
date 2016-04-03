@@ -140,11 +140,9 @@ input[type=text]{
 }
 
 .config>div{
-    /*border: 1px solid white;*/
     padding-left: 20px;
     margin-top: 40px;
     padding-bottom: 4px;
-    border-bottom: 1px solid #393939;
 }
 
 

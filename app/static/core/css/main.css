@@ -276,7 +276,6 @@ textarea {
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-    /*flex-flow: row nowrap;*/
 
 }
 .dsp-none{
@@ -301,12 +300,3 @@ textarea {
 
 
 }
-
-/*.bor>div:nth-child(n){*/
-    /*background-color: white;*/
-/*}*/
-
-/*.bor>div:nth-child(2n){*/
-    /*background-color: black;*/
-/*}*/
-
