@@ -8,8 +8,8 @@ from random import random
 
 DEFAULT_VALUE = {
     'nickname': int(random()*10**10),
-    'quantity': 3,
-    'size': 3,
+    'q_count': 3,
+    'q_size': 3,
     'rules': 'd|v|h|',
     'colors': 'c:90|90|90+s:255|255|255+f:0|0|0+n:90|90|90+',
     'symbols': 'O|X'
@@ -22,8 +22,8 @@ def get_configurations(r):
 
     data = {
         'nickname': get('nick'),
-        'quantity': get('q'),
-        'size': get('size'),
+        'q_count': get('q'),
+        'q_size': get('size'),
         'rules': {
             'horizontal': get('ch-h'),
             'vertical': get('ch-v'),
@@ -49,9 +49,6 @@ def get_context(c):
 
     # Colors
     get_colors(c)
-    print()
-    print(c)
-    print()
 
     return c
 
@@ -105,8 +102,8 @@ def save_settings(c, ip):
 
     if q is None:
         q = UserConfigurations(c, ip)
-        db.session.add(q)
     else:
-        UserConfigurations.change_settings(q, c)
+        q = UserConfigurations.change_settings(q, c)
 
+    db.session.add(q)
     db.session.commit()

@@ -9,8 +9,8 @@ class ValidateConfig:
         data['nickname'] = self.valid_nickname(data['nickname'])
         data['rules'] = self.valid_rules(data['rules'])
 
-        self.valid_size(data['quantity'])
-        self.valid_size(data['size'])
+        self.valid_size(data['q_count'])
+        self.valid_size(data['q_size'])
         self.valid_colors(data['colors'])
         self.valid_symbols(data['symbols'])
 
