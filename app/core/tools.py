@@ -1,3 +1,8 @@
+from flask_mail import Message
+from app import mail
+from config import ConfigClass
+
+
 def get_configurations(r):
 
     get = r.form.get
@@ -21,3 +26,10 @@ def get_configurations(r):
     }
 
     return data
+
+
+def send_message(t, m):
+    msg = Message(t, recipients=[ConfigClass.AUTHOR_EMAIL])
+    msg.html = m
+
+    mail.send(msg)

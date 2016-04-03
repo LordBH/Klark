@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from app import app
-from app.core.tools import get_configurations
+from app.core.tools import get_configurations, send_message
 
 
 core_blueprint = Blueprint('core', __name__, template_folder='templates',
@@ -27,10 +27,7 @@ def recall():
     get = request.form.get
     title = get('title')
     message = get('message')
-    print()
-    print(title)
-    print(message)
-    print()
+    send_message(title, message)
     session['message'] = 'Thank you for helping'
     return redirect(url_for('core.index'))
 
