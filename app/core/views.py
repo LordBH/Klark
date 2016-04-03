@@ -35,7 +35,7 @@ def recall():
     return redirect(url_for('core.index'))
 
 
-@extra.route(r'/set_settings', methods=['POST'])
+@extra.route(r'/settings', methods=['POST'])
 def settings():
     if request.method == 'POST':
         session['message'] = 'Bad Settings'
