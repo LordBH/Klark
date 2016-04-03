@@ -33,7 +33,7 @@ $(function () {
     $('#a2').text(s2);
     $('#b1').text(s1);
     $('#b2').text(s2);
-    
+
     $('.board-color>div>input[type=range]').trigger('input');
 
 });
@@ -55,6 +55,7 @@ $('input[type=range]').on('mousemove', function (d) {
     if (idElement == '#g-b-size' && boardRangeSize != val) {
         boardRangeSize = val;
         changeViewBoardSize(val)
+        $('.board-color>div>input[type=range]').trigger('input')
     }
 });
 

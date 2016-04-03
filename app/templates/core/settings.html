@@ -1,21 +1,23 @@
 <form action="{{ url_for('core.settings') }}" method="post" class="config" id="settings">
     <div>
         <label for="nickname">~ Nickname : </label>
-        <input id="nickname" type="text" name="nick" value="" placeholder="">
+        <input id="nickname" type="text" name="nick" value="{{ context['nickname'] }}">
 
     </div>
 
     <div>
         <label for="q-to-win">~ Range of quantity crosses or noughts to win</label>
         <br>
-        <input class="slider" id="q-to-win" type="range" min="3" max="13" step="1" name="q" value="3">
+        <input class="slider" id="q-to-win" type="range" min="3" max="12" step="1" name="q"
+               value="{{ context['q_count'] }}">
         <input type="text" id="sl-q" title="quantity of crosses and noughts">
         <br>
     </div>
     <div>
         <label for="g-b-size">~ Game board size</label>
         <br>
-        <input class="slider" id="g-b-size" type="range" min="3" max="12" step="1" name="size" value="3">
+        <input class="slider" id="g-b-size" type="range" min="3" max="12" step="1" name="size"
+               value="{{ context['q_size'] }}">
         <input type="text" id="sl-g" title="Board size">
         <br>
     </div>
@@ -31,7 +33,6 @@
 
     <div class="board-color">
         {% for x in ['First', 'Second', 'Noughts' , 'Crosses'] %}
-            <br><br>
             <div class="{{ x[0]|lower }}-color">
                 <label>~ {{ x }} Cell</label><br>
                 {% for y in ['red', 'green', 'blue'] %}
@@ -47,9 +48,9 @@
 
     <div class="symbol-f">
         <label for="noughts-">Noughts</label>
-        <input id="noughts-" type="text" name="cell-1" value="O" maxlength="1">
+        <input id="noughts-" type="text" name="cell-1" value="{{ context['symbols'][0] }}" maxlength="1">
         <label for="crosses-">Crosses</label>
-        <input id="crosses-" type="text" name="cell-2" value="X" maxlength="1">
+        <input id="crosses-" type="text" name="cell-2" value="{{ context['symbols'][1] }}" maxlength="1">
     </div>
 
     <div id="d-but-2" onclick="saveSettings()">Save my settings</div>
