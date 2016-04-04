@@ -31,6 +31,8 @@ class ValidateConfig:
         except ValueError:
             self.FAIL = True
 
+        return self.FAIL
+
     def valid_rules(self, q):
         for x in q:
             x = x[0]
