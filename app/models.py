@@ -1,5 +1,10 @@
 from app import db
+from app.core.validations import ValidateConfig
 from datetime import datetime
+from flask import request
+from random import random
+
+valid = ValidateConfig()
 
 
 class GameRooms(db.Model):
@@ -7,16 +12,42 @@ class GameRooms(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     game_id = db.Column(db.String(30), nullable=False)
-    player1 = db.Column(db.String(40), nullable=False)
-    player2 = db.Column(db.String(40), nullable=False)
-    win = db.Column(db.String(40), nullable=False)
-    ip1 = db.Column(db.String(15), nullable=False)
-    ip2 = db.Column(db.String(15), nullable=False)
-    moves = db.Column(db.Text)
+    player1 = db.Column(db.String(40))
+    player2 = db.Column(db.String(40))
+    win = db.Column(db.String(40))
+    ip1 = db.Column(db.String(15))
+    ip2 = db.Column(db.String(15))
+    q_count = db.Column(db.String(5))
+    q_size = db.Column(db.String(5))
+    rules = db.Column(db.String(10))
+    moves = db.Column(db.Text, default='0')
     active = db.Column(db.DateTime, default=datetime.now())
 
-    def __init__(self):
-        pass
+    def __init__(self, data, create=False, join=False):
+        if create:
+            q = data.get('q')
+            size = data.get('size')
+            rules = {
+                'v': data.get('v'),
+                'h': data.get('h'),
+                'd': data.get('d')
+            }
+
+            self.game_id = int(random()*10**8)
+            self.player1 = valid.valid_nickname(data.get('nickname'))
+            self.q_count = q if not valid.valid_size(q) else 3
+            self.q_size = size if not valid.valid_size(size) else 3
+            self.ip1 = request.remote_addr
+
+            self.get_rules(rules)
+
+    def get_rules(self, rul):
+        extra = ''
+        for x, y in rul.items():
+            if y:
+                extra += x + '|'
+
+        self.rules = extra
 
 
 class UserConfigurations(db.Model):
@@ -33,21 +64,15 @@ class UserConfigurations(db.Model):
     date = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(self, data, ip):
+        u = UserConfigurations
+
         self.ip = ip
         self.nickname = data['nickname']
         self.q_count = data['q_count']
         self.q_size = data['q_size']
-        self.rules = data['rules']
-        self.colors = data['colors']
-        self.symbols = data['symbols']
-
-        self.set_data()
-
-    def set_data(self):
-        u = UserConfigurations
-        self.rules = u.set_rules(self)
-        self.colors = u.set_colors(self)
-        self.symbols = u.set_symbols(self).upper()
+        self.rules = u.set_rules(data['rules'])
+        self.colors = u.set_colors(data['colors'])
+        self.symbols = u.set_symbols(data['symbols'])
 
     @staticmethod
     def set_rules(self):
@@ -74,9 +99,6 @@ class UserConfigurations(db.Model):
 
     @staticmethod
     def change_settings(q, data):
-        # for x in q.__dict__:
-        #     if x[0] not in ['_', 'd', 'i']:
-        #         q.__dict__[x] = data[x]
         u = UserConfigurations
         q.nickname = data['nickname']
         q.q_count = data['q_count']
@@ -84,6 +106,7 @@ class UserConfigurations(db.Model):
         q.rules = u.set_rules(data['rules'])
         q.colors = u.set_colors(data['colors'])
         q.symbols = u.set_symbols(data['symbols']).upper()
+
         return q
 
 db.create_all()
