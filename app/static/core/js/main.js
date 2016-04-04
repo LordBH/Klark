@@ -54,7 +54,7 @@ $('input[type=range]').on('mousemove', function (d) {
 
     if (idElement == '#g-b-size' && boardRangeSize != val) {
         boardRangeSize = val;
-        changeViewBoardSize(val)
+        changeViewBoardSize(val);
         $('.board-color>div>input[type=range]').trigger('input')
     }
 });
@@ -72,7 +72,6 @@ $('.board-color>div>input[type=range]').on('input', function (d) {
         val = checkInterval(val);
         rgb += val
     }
-    console.log(rgb);
 
     if (classID == 'f') {
         $('.' + 'blc').not('.dsp-none').css('background-color', rgb)
@@ -80,9 +79,11 @@ $('.board-color>div>input[type=range]').on('input', function (d) {
     else if (classID == 's') {
         $('.' + 'wht').not('.dsp-none').css('background-color', rgb);
     } else if (classID == 'n') {
-        $('.' + 'blc').not('.dsp-none').css('color', rgb);
+        $('#a1').not('.dsp-none').css('color', rgb);
+        $('#b1').not('.dsp-none').css('color', rgb);
     } else if (classID == 'c') {
-        $('.' + 'wht').not('.dsp-none').css('color', rgb);
+        $('#a2').not('.dsp-none').css('color', rgb);
+        $('#b2').not('.dsp-none').css('color', rgb);
     }
 });
 
@@ -92,11 +93,11 @@ $('.symbol-f').on('keyup', function (e) {
     var v = $(idElement).val().toUpperCase();
 
     if (idElement == '#crosses-') {
-        $('#a2').text(v);
+        $('#a1').text(v);
         $('#b2').text(v);
 
     } else if (idElement == '#noughts-') {
-        $('#a1').text(v);
+        $('#a2').text(v);
         $('#b1').text(v);
     }
 });
