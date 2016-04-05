@@ -33,7 +33,7 @@ class GameRooms(db.Model):
                 'd': data.get('d')
             }
 
-            self.game_id = int(random()*10**8)
+            self.game_id = self.create_game_id()
             self.player1 = valid.valid_nickname(data.get('nickname'))
             self.q_count = q if not valid.valid_size(q) else 3
             self.q_size = size if not valid.valid_size(size) else 3
@@ -48,6 +48,15 @@ class GameRooms(db.Model):
                 extra += x + '|'
 
         self.rules = extra
+
+    @staticmethod
+    def create_game_id():
+        value = int(random() * 10 ** 8)
+        l = len(str(value))
+        for x in range(8 - l):
+            value *= 10
+
+        return value
 
 
 class UserConfigurations(db.Model):
