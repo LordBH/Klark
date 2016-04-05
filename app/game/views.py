@@ -67,9 +67,9 @@ def loading_players(data):
     game_id = data.get('rooms')
     if game_id is not None:
         join_room(game_id)
-        GAME_ROOMS.setdefault(game_id, set())
-        GAME_ROOMS[game_id].add(session.get('nickname'))
-        return emit('players', len(GAME_ROOMS[game_id]), room=KLARK_ROOM)
+        GAME_ROOMS.setdefault(game_id, {'moves': {}, 'people': set()})
+        GAME_ROOMS[game_id]['people'].add(session.get('nickname'))
+        return emit('players', len(GAME_ROOMS[game_id]['people']), room=game_id)
 
 
 @socket_io.on('enter-message', namespace='/core')
@@ -82,7 +82,7 @@ def send_message(ex):
 
 
 @socket_io.on('symbol-set', namespace='/core')
-def send_message(ex):
+def set_symbol(ex):
     data = {
         'id': ex.get('id'),
         'symbol': ex.get('symbol'),

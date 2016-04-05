@@ -1,23 +1,23 @@
-<div class="fixed-wrapper show-div">
+<div class="fixed-wrapper show-div wall">
     <div class="board">
         {% include 'core/board.html' %}
     </div>
 </div>
-
-<div class="fixed-wrapper">
-    <div class="set-board">
-        {% include 'core/set-board.html' %}
-    </div>
-</div>
-
-<div class="fixed-wrapper">
-
-    <div class="cont-f">
-
-        {% include 'core/contacts.html' %}
-    </div>
-
-</div>
+{##}
+{#<div class="fixed-wrapper">#}
+{#    <div class="set-board">#}
+{#        {% include 'core/set-board.html' %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<div class="fixed-wrapper">#}
+{##}
+{#    <div class="cont-f">#}
+{##}
+{#        {% include 'core/contacts.html' %}#}
+{#    </div>#}
+{##}
+{#</div>#}
 
 {#<div class="fixed-wrapper">#}
     <div id="alert">{% if context['msg'] %}{{ context['msg'] }}{% endif %}</div>

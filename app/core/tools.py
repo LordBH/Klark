@@ -1,12 +1,12 @@
 from app import mail, db
-from app.models import UserConfigurations
+from app.models import UserConfigurations, GameRooms
 from config import ConfigClass
 from flask_mail import Message
 from flask import session
 
 
 DEFAULT_VALUE = {
-    'nickname': 'Guest',
+    'nickname': GameRooms.create_game_id(10),
     'q_count': 3,
     'q_size': 3,
     'rules': 'd|v|h|',

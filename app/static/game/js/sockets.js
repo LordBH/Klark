@@ -19,7 +19,6 @@ socket.on('show-message', function (data) {
 
 
 socket.on('show-symbol', function (data) {
-    console.log('show-symbol', data);
     var elementID = '#' + data.id;
 
     if (data.symbol){
@@ -29,5 +28,7 @@ socket.on('show-symbol', function (data) {
         $(elementID).css('color', colorNoughtsCell);
         $(elementID).text(noughts);
     }
-
+    if (data.symbol != FLAG){
+        firstMove = !firstMove;
+    }
 });

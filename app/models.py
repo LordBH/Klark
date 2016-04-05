@@ -50,10 +50,10 @@ class GameRooms(db.Model):
         self.rules = extra
 
     @staticmethod
-    def create_game_id():
-        value = int(random() * 10 ** 8)
+    def create_game_id(n=8):
+        value = int(random() * 10 ** n)
         l = len(str(value))
-        for x in range(8 - l):
+        for x in range(n - l):
             value *= 10
 
         return value

@@ -1,5 +1,4 @@
 var socket = io.connect('http://' + document.domain + ':' + location.port + '/core');
-var gameChoose = '';
 
 
 function sendSocket(emitName, obj) {
@@ -21,11 +20,9 @@ socket.on('my-game-created', function (data) {
 socket.on('load-game', function (data) {
     console.log(data);
     console.log('loading-game');
-    // if (gameChoose = data['game']) {
         setTimeout(function () {
             window.location.href = 'http://' + document.domain + ':' + location.port + '/' + data['game']
-        }, 1000);
-    // }
+        }, 0);
 });
 
 
