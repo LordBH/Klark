@@ -4,6 +4,11 @@ body {
     background: #262626;
 }
 
+.log::-webkit-scrollbar{
+    overflow: hidden;
+    background-color: #262626;
+}
+
 .view {
     display: flex;
 
@@ -46,7 +51,7 @@ body {
 }
 
 .message{
-    padding: 10px 20px;
+    padding: 10px 0 10px 20px;
     color: white;
     /*border-bottom: 2px solid #484848;*/
 }
