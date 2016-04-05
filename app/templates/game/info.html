@@ -1,23 +1,38 @@
-<div>People are watching : <span class="watc">0</span></div>
-<div>Game link : </div>
-<input title="game-id" type="text">
+<div>People on page : <span class="watch">0</span></div>
+<div>Game link :</div>
+<input id='link' title="game-id" type="text" value="{{ context['link'] }}">
 <br>
 <br>
-<div>You : </div>
-<div>Opponent : </div>
-<div>Quantity to win : </div>
+<div>Player 1 : {{ context['player1'] }}</div>
+<div>Player 2 : {{ context['player2'] }}</div>
+<div>Quantity to win : <span class="q-t">{{ context['quantity'] }}</span></div>
 <div>
     <div>Permissions</div>
-    <div class="perm">Vertical : <span class="perm-n"></span></div>
-    <div class="perm">Horizontal : <span class=""></span></div>
-    <div class="perm">Diagonal : <span class=""></span></div>
+    {% for x in ['Vertical', 'Horizontal', 'Diagonal'] %}
+        <div class="perm">{{ x }} :
+            {% if context['rules'][x[0]] %}
+                <span class="perm-y">Yes</span>
+            {% else %}
+                <span class="perm-n">No</span>
+            {% endif %}
+        </div>
+    {% endfor %}
 
 </div>
 <div>Moves : <span class="moves">0</span></div>
-
+<div>{{ context['flag'] }}</div>
 
 <div class="d-but-3 d-but-4">Pass party</div>
 
 <div class="d-but-3 d-but-4">Revenge</div>
+<div id="inf-g" style="display: none">
+    <div id="s-board">{{ context['size'] }}</div>
+    <div id="first-clr">{{ context['f'] }}</div>
+    <div id="second-clr">{{ context['s'] }}</div>
+    <div id="noughts-clr">{{ context['n'] }}</div>
+    <div id="crosses-clr">{{ context['c'] }}</div>
+    <div id="symbols">{{ context['symbols'] }}</div>
+    <div id="beginMoving">{{ context['flag'] }}</div>
+</div>
 
 
