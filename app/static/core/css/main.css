@@ -4,6 +4,11 @@ body {
 
 }
 
+body::-webkit-scrollbar{
+    overflow: hidden;
+    background-color: #a5a5a5;
+}
+
 /** wrapper **/
 
 .wrapper {
@@ -112,6 +117,7 @@ a {
 .in-a, .in-f {
     padding: 10px 15px;
     transition: background-color .2s;
+    cursor: pointer;
 }
 
 .in-a:hover, .in-f:hover {
@@ -140,11 +146,14 @@ a {
 
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
 
     opacity: 0;
     transition: opacity .4s;
+}
+
+.fixed-wrapper:not(.wall){
+    align-items: center;
 }
 
 .show-div {
@@ -155,7 +164,7 @@ a {
 
 .board {
     opacity: 1;
-
+    display: block;
 }
 
 .set-board {
@@ -268,9 +277,6 @@ textarea {
     }
 }
 
-.cont-f{
-    visibility: hidden;
-}
 .bor{
     display: flex;
     flex-wrap: wrap;
@@ -299,4 +305,34 @@ textarea {
     font-size: 200px;
 
 
+}
+
+.wall-games{
+    background: #ebebeb;
+    /*width: 300px;*/
+}
+
+.wall-games>tbody>.legend>td{
+    font-size: 20px;
+    padding: 10px 25px;
+}
+
+.wall-games>tbody>tr>td{
+    padding: 7px;
+
+    font-size: 16px;
+    text-align: center;
+
+}
+.start-play{
+    width: auto;
+    height: 100%;
+    background-color: #cacaca;
+    transition: background .5s, color .5s;
+}
+
+.start-play:hover{
+    cursor: pointer;
+    color: white;
+    background-color: #7d7d7d;
 }

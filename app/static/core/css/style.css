@@ -148,7 +148,8 @@ input[type=text]{
 
 .hor-set{
     position: relative;
-    width: 300%;
+    margin-left: 35px;
+    width: 200%;
     opacity: 0;
 }
 
