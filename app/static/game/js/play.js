@@ -1,13 +1,42 @@
-var boardRangeSize = 12;
-var maxSize = 0;
+var gameID = '';
+var boardRangeSize = parseInt($('#s-board').text());
+var quantityToWin = $('.q-t').text();
+var colorFirstCell = $('#first-clr').text();
+var colorSecondCell = $('#second-clr').text();
+var colorNoughtsCell = $('#noughts-clr').text();
+var colorCrossesCell = $('#crosses-clr').text();
+var symbolID = '#symbols';
+var noughts = $(symbolID).text()[0];
+var crosses = $(symbolID).text()[2];
+var firstMove = $('#beginMoving').text();
 var boardSymbols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
-var symbol = 'X';
+var symbol = 'q';
 
 
-$(function () {
+$(document).ready(function () {
     createBoard(boardRangeSize);
     changeViewBoardSize(boardRangeSize);
-});
+    $('.blc').css('background-color', colorFirstCell);
+    $('.wht').css('background-color', colorSecondCell);
+
+    gameID = $('#link').attr('value');
+    gameID = gameID.split('/');
+    gameID = gameID[gameID.length - 1];
+    sendSocket('game-on', {rooms: gameID});
+
+    console.log(firstMove, 'ppppp');
+
+    if (firstMove == 'True') {
+    firstMove = true;
+    symbol = crosses;
+    alert('U move bitch first');
+    } else {
+    firstMove = false;
+    symbol = noughts
+    }
+    console.log(symbol);
+    $('#c-msg').focus();
+});http://127.0.0.1:5000/
 
 function createBoard(val) {
     var bor = '.bor';
@@ -18,7 +47,7 @@ function createBoard(val) {
     for (var y = 0; y < v; y++)
         for (var i = 1; i < v + 1; i++) {
             var beginDiv = '<div id="' + boardSymbols[y] + i + '" class="';
-            var endDiv  = '" onclick="setSymbol(event)"></div>';
+            var endDiv = '" onclick="setSymbol(event)"></div>';
 
             if (i % 2 == 0) {
                 $(bor).append(beginDiv + white + endDiv);
@@ -26,10 +55,10 @@ function createBoard(val) {
                 $(bor).append(beginDiv + black + endDiv);
             }
             if (val == i) {
-                    var extra = black;
-                    black = white;
-                    white = extra;
-                }
+                var extra = black;
+                black = white;
+                white = extra;
+            }
         }
 }
 
@@ -53,23 +82,45 @@ function changeViewBoardSize(val) {
     } else {
         $(b_d).css('font-size', (650 / v) - v);
     }
-
-
-    for (var i = 0; i < maxSize; i++)
-        for (var j = 1; j < maxSize + 1; j++) {
-            if (j < v + 1 && i < v)
-                $('#' + boardSymbols[i] + j).removeClass('dsp-none');
-            else
-                $('#' + boardSymbols[i] + j).addClass('dsp-none');
-        }
 }
 
 function setSymbol(event) {
-    event.target.innerHTML = symbol;
-    console.log(event)
+    if (firstMove) {
+        firstMove = false;
+        console.log(symbol);
+        event.target.innerHTML = symbol;
+        console.log('setSymbol');
+        var val = true;
+        if (symbol == noughts) {
+            val = false
+        }
+        sendSocket('symbol-set', {id: event.target.id, symbol: val, room: gameID})
+    }
+
 }
 
 
+$('#c-msg').keypress(function (event) {
+    if (event.keyCode == (13)) {
+        event.preventDefault();
+        sendMessage();
+    }
+
+});
+$('.d-but-3').click(function (event) {
+    sendMessage();
+});
+
+function sendMessage() {
+    console.log('sendMessage');
+    var msgId = '#c-msg';
+    var message = $(msgId).val();
+    $(msgId).val('').focus();
+    if (msgId != '') {
+        console.log('send');
+        sendSocket('enter-message', {msg: message, room: gameID})
+    }
+}
 // function alertMessage(msg) {
 //     var al = '#alert';
 //     $(al).text(msg);
