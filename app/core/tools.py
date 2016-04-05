@@ -3,11 +3,10 @@ from app.models import UserConfigurations
 from config import ConfigClass
 from flask_mail import Message
 from flask import session
-from random import random
 
 
 DEFAULT_VALUE = {
-    'nickname': int(random()*10**10),
+    'nickname': 'Guest',
     'q_count': 3,
     'q_size': 3,
     'rules': 'd|v|h|',
@@ -86,6 +85,8 @@ def get_user_settings(c, ip):
             c[x] = y
         else:
             c[x] = q.__dict__[x]
+            if x == 'nickname':
+                session['nickname'] = q.__dict__[x]
     session.setdefault('nickname', DEFAULT_VALUE['nickname'])
     return get_context(c)
 
