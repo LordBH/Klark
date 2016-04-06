@@ -15,6 +15,9 @@ socket.on('my-game-created', function (data) {
         sendSocket('joining', {rooms: [data.game]});
 });
 
+socket.on('change-but-watch', function (id) {
+    $('#' + id + '>td:last-child').text('Watch')
+});
 
 
 socket.on('load-game', function (data) {
@@ -59,7 +62,7 @@ function startPlay(event) {
     var children = $('#' + parentId).children('td');
     var nickname = $('#nickname').val();
     var data = {
-        'game' : children[1].innerHTML,
+        'game' : children[0].innerHTML,
         'nickname': nickname
     };
 
@@ -68,3 +71,4 @@ function startPlay(event) {
         sendSocket('prepare-game', data);
     }, 2000)
 }
+
