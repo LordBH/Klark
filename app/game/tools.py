@@ -1,4 +1,4 @@
-from app.models import UserConfigurations, db
+from app.models import GameRooms, UserConfigurations, db
 from app.core.tools import get_colors
 from flask import abort, request, session
 from random import choice
@@ -50,7 +50,6 @@ def set_player(q, pl):
 def create_context_game(query):
     context = {
         'link': 'http://' + request.host + '/' + query.game_id,
-        'moves': 0,
         'quantity': query.q_count,
         'size': query.q_size,
         'player1': query.player1,
@@ -77,6 +76,7 @@ def create_context_game(query):
         if x:
             val = True
         context['rules'][x.upper()] = val
+    context['symbols'] = 'O|X'
     if session.get('nickname') != 'Guest':
         get_user_settings(context)
 
@@ -123,10 +123,9 @@ def check_location(i, ex, flag):
 
 
 def check_horizontal(row, col, cont, val, size, q):
-    start = 1
+    start = 0
     for inx in range(1, size + 1):
         cell = cont[row][inx - 1]
-
         if cell == val:
             if inx - start == q:
                 return True
@@ -157,10 +156,6 @@ def check_diagonal(row, col, cont, val, size, q):
 
     row1, col1 = get_row1_and_col1(row, col, subtract)
     row2, col2, count = get_row2_and_col2(row, col, size)
-    print()
-    print(row1, col1)
-    print(row2, col2, count)
-    print()
 
     for x in range(size - subtract):
         cell = board[row1 + x][col1 + x]
@@ -171,11 +166,11 @@ def check_diagonal(row, col, cont, val, size, q):
         else:
             start = x + 1
 
+    start = 0
     for x in range(count):
-        print(row2)
-        print(x)
+        print(x, row2, col2)
         cell = board[row2 - x][col2 + x]
-
+        print(cell)
         if cell == val:
             if x - start + 1 == q:
                 return True
@@ -219,8 +214,9 @@ def get_row2_and_col2(row, col, size):
         s = size - row2
     elif size - 1 == row + col:
         print('r2=w2')
-        row2 = col2 = size - 1
-        s = size
+        col2 = 0
+        row2 = size - 1
+        return row2, col2, size
     else:
         print('row2<col2')
         row2 = 0
@@ -228,3 +224,10 @@ def get_row2_and_col2(row, col, size):
         s = size - col2
     print(size - row2 - 1, col2, s)
     return size - row2 - 1, col2, s
+
+
+def set_winner(id_, flag):
+    q = GameRooms.query.filter_by(game_id=id_).first()
+    q.win = flag
+    db.session.add(q)
+    db.session.commit()
