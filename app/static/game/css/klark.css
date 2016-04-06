@@ -4,7 +4,7 @@ body {
     background: #262626;
 }
 
-.log::-webkit-scrollbar{
+.log::-webkit-scrollbar {
     overflow: hidden;
     background-color: #262626;
 }
@@ -19,11 +19,12 @@ body {
     position: absolute;
     color: white;
     font-size: 18px;
-    padding: 35px 25px;
+    padding: 35px 25px 0 25px;
     left: 0;
     margin-left: 35px;
 }
-.info>div{
+
+.info > div {
     padding: 15px 0;
 }
 
@@ -38,7 +39,7 @@ body {
     left: 25%;
 }
 
-.log{
+.log {
     position: relative;
     display: block;
     width: 285px;
@@ -50,23 +51,26 @@ body {
     /*border-bottom: 2px solid black;*/
 }
 
-.message{
+.message {
     padding: 10px 0 10px 20px;
     color: white;
     /*border-bottom: 2px solid #484848;*/
 }
-.nickname{
-    margin: 20px 20px 20px 0 ;
+
+.nickname {
+    margin: 20px 20px 20px 0;
     text-align: right;
     border-bottom: 1px solid #343430;
 
 }
-.text{
+
+.text {
     /*margin: 10px ;*/
     /*margin-bottom: 15px;*/
     padding-bottom: 15px;
     border-bottom: 2px solid #a4a4a4;
 }
+
 .chat {
     position: absolute;
     height: 648px;
@@ -75,7 +79,7 @@ body {
     /*border: 2px solid black;*/
 }
 
-.p-area{
+.p-area {
     /*position: relative;*/
     /*bottom: -500px;*/
     width: 98%;
@@ -84,7 +88,7 @@ body {
     margin-top: 10px;
 }
 
-.d-but-3{
+.d-but-3 {
     background: #161616;
     margin: 1px;
     color: white;
@@ -94,17 +98,22 @@ body {
     cursor: pointer;
 
 }
-.d-but-4{
+
+.d-but-4 {
     margin-bottom: 10px;
     margin-top: 10px;
     border: 2px solid #5e5e5e;
 }
 
-.d-but-3:hover{
+.d-but-3:hover {
     background: #393939;
 }
 
-.bor>div:hover {
+.bor > div:hover {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     cursor: pointer;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -114,12 +123,15 @@ body {
     border: 2px solid red;
     background: darkblue;
 }
-.perm{
+
+.perm {
     margin-left: 40px;
 }
-.perm-y{
+
+.perm-y {
     color: #00840b;
 }
-.perm-n{
+
+.perm-n {
     color: #f1000e;
 }
