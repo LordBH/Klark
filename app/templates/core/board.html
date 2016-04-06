@@ -7,5 +7,20 @@
         <td>Permissions</td>
         <td>Join</td>
     </tr>
+    {% for x in context['gamerooms'] %}
+        {% if x['win'] == '-1' %}
+            <tr id="{{ x['game_id'] }}">
+                <td>{{ x['game_id'] }}</td>
+                <td>{{ x['player1'] }}</td>
+                <td>{{ x['q_size'] }}</td>
+                <td>{{ x['q_count'] }}</td>
+                <td>{{ x['rules'][0]|upper }} {{ x['rules'][2]|upper }} {{ x['rules'][4]|upper }}</td>
+
+                <td class="start-play" onclick="startPlay(event)">
+                    {% if not x['player2'] %}Play{% else %}Watch</td>{% endif %}
+            </tr>
+        {% endif %}
+
+    {% endfor %}
     <tr id="1"></tr>
 </table>
