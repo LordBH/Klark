@@ -80,6 +80,7 @@ def get_colors(c):
 
 def get_user_settings(c, ip):
     q = UserConfigurations.query.filter_by(ip=ip).first()
+    gamerooms = GameRooms.query.order_by('active').all()[-10:]
     for x, y in DEFAULT_VALUE.items():
         if q is None:
             c[x] = y
@@ -88,6 +89,7 @@ def get_user_settings(c, ip):
             if x == 'nickname':
                 session['nickname'] = q.__dict__[x]
     session.setdefault('nickname', DEFAULT_VALUE['nickname'])
+    c['gamerooms'] = gamerooms
     return get_context(c)
 
 
