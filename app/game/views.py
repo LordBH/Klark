@@ -1,8 +1,9 @@
 from app import socket_io, db
-from app.game.tools import check_game, set_player, create_context_game, create_template
 from app.models import GameRooms
 from flask import Blueprint, render_template, abort, session
 from flask_socketio import join_room, emit
+from app.game.tools import check_game, set_player, create_context_game, \
+    create_template, check_location, boardSymbols
 
 
 game_blueprint = Blueprint('game', __name__, template_folder='templates',
@@ -11,7 +12,7 @@ game_blueprint = Blueprint('game', __name__, template_folder='templates',
 extra = game_blueprint
 KLARK_ROOM = 'klark-room'
 GAME_CREATED = 'game-created'
-GAME_ROOMS = {}
+PLAY_ROOMS = {}
 
 
 @extra.route(r'/<game>', methods=['GET', 'POST'])
@@ -21,6 +22,18 @@ def play(game):
     if q is None:
         abort(404)
     context = create_context_game(q)
+
+    count = int(context['size'])
+
+    PLAY_ROOMS.setdefault(game, {
+        'moves': {
+            sym: [-1 for x in range(count)] for sym in boardSymbols[:count]
+        },
+        'people': set(),
+        'rules': [context['rules'].get(x) for x in ['H', 'V', 'D']],
+        'q': context['quantity']
+    })
+
     return render_template('game/play.html', context=context)
 
 
@@ -67,9 +80,8 @@ def loading_players(data):
     game_id = data.get('rooms')
     if game_id is not None:
         join_room(game_id)
-        GAME_ROOMS.setdefault(game_id, {'moves': {}, 'people': set()})
-        GAME_ROOMS[game_id]['people'].add(session.get('nickname'))
-        return emit('players', len(GAME_ROOMS[game_id]['people']), room=game_id)
+        PLAY_ROOMS[game_id]['people'].add(session.get('nickname'))
+        return emit('players', len(PLAY_ROOMS[game_id]['people']), room=game_id)
 
 
 @socket_io.on('enter-message', namespace='/core')
@@ -83,8 +95,14 @@ def send_message(ex):
 
 @socket_io.on('symbol-set', namespace='/core')
 def set_symbol(ex):
+    room = ex.get('room')
+    id_ = ex.get('id')
+    sym = ex.get('symbol')
+
     data = {
-        'id': ex.get('id'),
+        'id': id_,
         'symbol': ex.get('symbol'),
+        'winner': check_location(id_, PLAY_ROOMS[room], sym)
     }
-    return emit('show-symbol', data, room=ex.get('room'))
+
+    return emit('show-symbol', data, room=room)
