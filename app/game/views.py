@@ -3,7 +3,7 @@ from app.models import GameRooms
 from flask import Blueprint, render_template, abort, session
 from flask_socketio import join_room, emit
 from app.game.tools import check_game, set_player, create_context_game, \
-    create_template, check_location, boardSymbols
+    create_template, check_location, boardSymbols, set_winner
 
 
 game_blueprint = Blueprint('game', __name__, template_folder='templates',
@@ -73,6 +73,7 @@ def loading_second_player(data):
 
     emit('load-game', ex)  # info game
     emit('load-game', ex, room=game_id)
+    emit('change-but-watch', game_id, room=KLARK_ROOM)
 
 
 @socket_io.on('game-on', namespace='/core')
@@ -81,7 +82,11 @@ def loading_players(data):
     if game_id is not None:
         join_room(game_id)
         PLAY_ROOMS[game_id]['people'].add(session.get('nickname'))
-        return emit('players', len(PLAY_ROOMS[game_id]['people']), room=game_id)
+        data = {
+            'moves': PLAY_ROOMS[game_id]['moves'],
+            'len': len(PLAY_ROOMS[game_id]['people'])
+        }
+        return emit('players', data, room=game_id)
 
 
 @socket_io.on('enter-message', namespace='/core')
@@ -104,5 +109,9 @@ def set_symbol(ex):
         'symbol': ex.get('symbol'),
         'winner': check_location(id_, PLAY_ROOMS[room], sym)
     }
+    if data['winner']:
+        set_winner(room, data['symbol'])
+    elif not data['winner']:
+        set_winner(room, data['symbol'])
 
     return emit('show-symbol', data, room=room)
