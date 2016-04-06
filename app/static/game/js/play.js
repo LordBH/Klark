@@ -83,7 +83,9 @@ function changeViewBoardSize(val) {
 }
 
 function setSymbol(event) {
-    if (firstMove) {
+    var idElement = '#' + event.target.id;
+    
+    if (firstMove && $(idElement).text() == '') {
         firstMove = false;
         event.target.innerHTML = symbol;
         var val = true;
@@ -114,6 +116,24 @@ function sendMessage() {
     if (msgId != '') {
         console.log('send');
         sendSocket('enter-message', {msg: message, room: gameID})
+    }
+}
+
+
+function setMoves(obj) {
+    var l = Object.keys(obj).length;
+    console.log(obj);
+    for (var i = 0; i < l ; i++) {
+        var key = boardSymbols[i];
+        for (var j = 0; j < l; j++) {
+            if (obj[key][j] == true) {
+                $('#' + key + (j + 1)).text(crosses);
+                console.log(obj[key][j], '#' + key + j);
+            } else if (obj[key][j] == false) {
+                console.log(obj[key][j], '#' + key + j);
+                $('#' + key + (j + 1)).text(noughts);
+            }
+        }
     }
 }
 // function alertMessage(msg) {

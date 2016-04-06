@@ -38,6 +38,7 @@ class GameRooms(db.Model):
             self.q_count = q if not valid.valid_size(q) else 3
             self.q_size = size if not valid.valid_size(size) else 3
             self.ip1 = request.remote_addr
+            self.win = -1
 
             self.get_rules(rules)
 
